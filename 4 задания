@@ -1,0 +1,61 @@
+package kz.kaznu.zhe;
+
+public class User {
+    private String lastName;
+    private String firstName;
+    private String middleName;
+    private int birthYear;
+    private String email;
+
+    public User(String lastName,String firstName,String middleName,int birthYear,String email){
+        this.lastName=lastName;
+        this.firstName=firstName;
+        this.middleName=middleName;
+        this.birthYear=birthYear;
+        this.email=email;
+    }
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public void setLastName(String lastName){
+        this.lastName=lastName;
+    }
+
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String setFirstName(String firstName){
+        this.firstName=firstName;
+    }
+
+    public String getMiddleName(){
+        return middleName;
+    }
+
+    public String setMiddleName(String firstName){
+        this.middleName=middleName;
+    }
+
+    public int getBirthYear(){
+        return birthYear;
+    }
+
+    public void setBirthYear(int birthYear){
+        this.birthYear=birthYear;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void  displayInfo(){
+        System.out.println("Фамилия"+lastName);
+        System.out.println("Имя"+firstName);
+        System.out.println("Отчество"+birthYear);
+        System.out.println("Год рождения"+middleName);
+        System.out.println("Email"+email);
+    }
+}

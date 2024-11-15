@@ -1,0 +1,52 @@
+public class Mir {
+    public static void main(String[] args) {
+        int port = 65432;  // Порт нөмірі
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Сервер іске қосылды. Порт: " + port);
+
+            while (true) {             
+                try (Socket clientSocket = serverSocket.accept();
+                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+                    System.out.println("Клиент қосылды: " + clientSocket.getInetAddress());
+                    out.println("Қолжетімді операциялар: +, -, *, /");
+                    String request = in.readLine();
+                    System.out.println("Клиенттің сұрауы: " + request);
+                    String[] parts = request.split(" ");
+                    if (parts.length == 3) {
+                        String operation = parts[0];
+                        double num1 = Double.parseDouble(parts[1]);
+                        double num2 = Double.parseDouble(parts[2]);
+                        double result = performOperation(operation, num1, num2);
+                        out.println("Нәтиже: " + result);
+                    } else {
+                        out.println("Қате: дұрыс сұрау емес");
+                    }
+                } catch (IOException e) {
+                    System.err.println("Қате: Клиентпен байланыс орнату мүмкін болмады.");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Серверді іске қосу кезінде қате: " + e.getMessage());
+        }
+    }
+    private static double performOperation(String operation, double num1, double num2) {
+        switch (operation) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            case "/":
+                if (num2 == 0) {
+                    System.out.println("Қате: бөлгіш 0 болмауы тиіс.");
+                    return Double.NaN; // NaN (Not a Number) - нәтиже
+                }
+                return num1 / num2;
+            default:
+                System.out.println("Қате: белгісіз операция.");
+                return Double.NaN;
+        }
+    }
+}
